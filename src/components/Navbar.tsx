@@ -10,14 +10,14 @@ const Navbar = () => {
     <div className='navbar-container'>
       <h2 style={{alignSelf : 'center'}}>Configuration</h2>
       <div>
-      <input type="search" style={{width : '500px' , padding : '10px' , borderRadius : '25px' , border : '0px'}} />
+      <input style={{width : '500px' , padding : '10px' , borderRadius : '25px' , border : '0px', paddingLeft:'50px' }} id="icon" />
       </div>
       <div style={{display : 'flex' , justifyContent : 'space-between' , alignItems : 'center' , padding : '25px'}}>
         <GitHubIcon className='Haver' style={{width : '75px'}}/>
-        <AccessTimeIcon style = {{width : '75px'}}/>
-        <ForumIcon style = {{width : '75px'}}/>
-        <NotificationsNoneIcon style = {{width : '75px'}}/>
-        <InsertPhotoIcon style = {{width : '75px'}}/>
+        <AccessTimeIcon className='Haver' style = {{width : '75px'}}/>
+        <ForumIcon className='Haver' style = {{width : '75px'}}/>
+        <NotificationsNoneIcon className='Haver' style = {{width : '75px'}}/>
+        <InsertPhotoIcon className='Haver' style = {{width : '75px'}}/>
       </div>
     </div>
   )

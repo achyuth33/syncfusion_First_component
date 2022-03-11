@@ -11,5 +11,16 @@
 }
 
 .Haver:hover {
-    color: rgb(221, 22, 22);
+    color: rgb(36, 106, 212);
+}
+
+#icon{
+
+    background: url("https://res.cloudinary.com/dqeg0ttxn/image/upload/v1646290415/Group_978_nishdh.png") no-repeat left;
+
+    background-color: #ffffff;
+
+    padding-right:30px;
+
+    background-position: 18px 5px;
 }

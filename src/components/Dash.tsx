@@ -1,103 +1,110 @@
+import { AccumulationChartComponent, AccumulationSeriesCollectionDirective, AccumulationSeriesDirective, AccumulationTooltip, Category, ChartComponent, ColumnSeries, DataLabel, Font, Inject, Legend, LineSeries, SeriesCollectionDirective, SeriesDirective, Tooltip } from "@syncfusion/ej2-react-charts";
+import { DashboardLayoutComponent, PanelDirective, PanelsDirective } from '@syncfusion/ej2-react-layouts';
 import * as React from 'react';
-import { DashboardLayoutComponent, PanelModel } from '@syncfusion/ej2-react-layouts';
-import { ButtonComponent } from '@syncfusion/ej2-react-buttons';
 import './dash.css';
 
-
-export default class Dash extends React.Component<{}, {}> {
+//const style_css = `
+//.header{
+  //  color:red;
 
     
-    public dashboardObj: any;
-    private cellSpacing: number[] = [5, 5];
-    private count: number = 8;
+//}
+//`
+export default class Dash extends React.Component {
 
-    onCloseIconHandler(event: any): void {
-        let proxy: any = this;
-        let panel: any = event.target;
-        if (panel.offsetParent) {
-            proxy.dashboardObj.removePanel(panel.offsetParent.id);
-        }
-    }
-    
-    btnClick(): void {
-        let proxy: any = this;
-        let panel: PanelModel[] = [{
-            'id': this.count.toString() + '_layout', 'sizeX': 1, 'sizeY': 1, 'row': 0, 'col': 0,
-            content: '<span id="close" class="e-close-icon e-clear-icon"></span><div class="text-align">' + this.count.toString() + '</div>'
-        }];
-        proxy.dashboardObj.addPanel(panel[0]);
-        let closeIcon : any = document.getElementById(this.count.toString() + '_layout')?.querySelector('.e-clear-icon');
-        closeIcon.addEventListener('click', this.onCloseIconHandler.bind(this));
-        this.count = this.count + 1;
-    }
+    //constructor() {
+        //super(...arguments);
+        
+    //}
+    // Template for line Chart 
+    cellSpacing = [25, 25];
 
-    rendereComplete() {
-        let closeElement: any = document.querySelectorAll('.e-clear-icon');
-        for (let i: number = 0; i < closeElement.length; i++) {
-            closeElement[i].addEventListener('click', this.onCloseIconHandler.bind(this));
-        }
+    lineTemplate() {
+        const lineData = [
+            { x: 2013, y: 28 }, { x: 2014, y: 25 }, { x: 2015, y: 26 }, { x: 2016, y: 27 },
+            { x: 2017, y: 32 }, { x: 2018, y: 35 },
+        ];
+        return (<div className="template">
+                <ChartComponent style={{ "height": "200px" }}><Inject services={[LineSeries]}/>
+                    <SeriesCollectionDirective>
+                        <SeriesDirective dataSource={lineData} xName='x' yName='y' type='Line'/>
+                    </SeriesCollectionDirective>
+                </ChartComponent>
+            </div>);
     }
-
-    public render(): JSX.Element {
-        return (
-            <div>
-                <div id="default_target" className="control-section">
-                    <div className="addContainer">
-                        <ButtonComponent id="add" cssClass="e-info" onClick={ this.btnClick.bind(this) }>Add Panel</ButtonComponent>
-                    </div>
-                    <DashboardLayoutComponent id="default_dashboard" columns={5} ref={(scope) => { this.dashboardObj = scope; }}
-                        cellSpacing={this.cellSpacing} allowResizing={true}>
-                        <div id="one" className="e-panel" data-row="0" data-col="0" data-sizeX="1" data-sizeY="1">
-                            <span id="close" className="e-close-icon e-clear-icon" />
-                            <div className="e-panel-container">
-                                <div className="text-align">0</div>
-                            </div>
-                        </div>
-                        <div id="two" className="e-panel" data-row="1" data-col="0" data-sizeX="1" data-sizeY="2">
-                            <span id="close" className="e-close-icon e-clear-icon" />
-                            <div className="e-panel-container">
-                                <div className="text-align">1</div>
-                            </div>
-                        </div>
-                        <div id="three" className="e-panel" data-row="0" data-col="1" data-sizeX="2" data-sizeY="2">
-                            <span id="close" className="e-close-icon e-clear-icon" />
-                            <div className="e-panel-container">
-                                <div className="text-align">2</div>
-                            </div>
-                        </div>
-                        <div id="four" className="e-panel" data-row="2" data-col="1" data-sizeX="1" data-sizeY="1">
-                            <span id="close" className="e-close-icon e-clear-icon" />
-                            <div className="e-panel-container">
-                                <div className="text-align">3</div>
-                            </div>
-                        </div>
-                        <div id="five" className="e-panel" data-row="2" data-col="2" data-sizeX="2" data-sizeY="1">
-                            <span id="close" className="e-close-icon e-clear-icon" />
-                            <div className="e-panel-container">
-                                <div className="text-align">4</div>
-                            </div>
-                        </div>
-                        <div id="six" className="e-panel" data-row="0" data-col="3" data-sizeX="1" data-sizeY="1">
-                            <span id="close" className="e-close-icon e-clear-icon" />
-                            <div className="e-panel-container">
-                                <div className="text-align">5</div>
-                            </div>
-                        </div>
-                        <div id="seven" className="e-panel" data-row="1" data-col="3" data-sizeX="1" data-sizeY="1">
-                            <span id="close" className="e-close-icon e-clear-icon" />
-                            <div className="e-panel-container">
-                                <div className="text-align">6</div>
-                            </div>
-                        </div>
-                        <div id="eight" className="e-panel" data-row="0" data-col="4" data-sizeX="1" data-sizeY="3">
-                            <span id="close" className="e-close-icon e-clear-icon" />
-                            <div className="e-panel-container">
-                                <div className="text-align">7</div>
-                            </div>
-                        </div>
+    // Template for Pie Chart
+    pieTemplate(): JSX.Element {
+        const pieData = [
+            { x: 'TypeScript', y: 13, text: 'TS 13%' },
+            { x: 'React', y: 12.5, text: 'React 12.5%' },
+            { x: 'MVC', y: 12, text: 'MVC 12%' },
+            { x: 'Core', y: 12.5, text: 'Core 12.5%' },
+            { x: 'Vue', y: 10, text: 'Vue 10%' },
+            { x: 'Angular', y: 40, text: 'Angular 40%' }
+        ];
+        return (<div className="template">
+            <AccumulationChartComponent style={{ "height": "200px" }} tooltip={{ enable: true }}><Inject services={[AccumulationTooltip]}/>
+                <AccumulationSeriesCollectionDirective>
+                    <AccumulationSeriesDirective dataSource={pieData} xName='x' yName='y' innerRadius="40%"/>
+                </AccumulationSeriesCollectionDirective>
+            </AccumulationChartComponent>
+        </div>);
+    }
+    // Template for Pie Chart 1
+    pieTemplate1(): JSX.Element {
+        const pieData = [
+            { 'x': 'Chrome', y: 37, text: '37%' }, { 'x': 'UC Browser', y: 17, text: '17%' },
+            { 'x': 'iPhone', y: 19, text: '19%' },
+            { 'x': 'Others', y: 4, text: '4%' }, { 'x': 'Opera', y: 11, text: '11%' },
+            { 'x': 'Android', y: 12, text: '12%' }
+        ];
+        const dataLabel:any = { visible: true, position: 'Inside', name: 'text', font: { fontWeight: '600' } };
+        return (<div className="template">
+            <AccumulationChartComponent style={{ "height": "200px" }} tooltip={{ enable: true }}>
+                <Inject services={[AccumulationTooltip]}/>
+                <AccumulationSeriesCollectionDirective>
+                    <AccumulationSeriesDirective dataSource={pieData} dataLabel={dataLabel} xName='x' yName='y' radius="70%" name='Browser'/>
+                </AccumulationSeriesCollectionDirective>
+            </AccumulationChartComponent>
+        </div>);
+    }
+    columnTemplate() {
+        const chartData = [
+            { month: 'Jan', sales: 35 }, { month: 'Feb', sales: 28 },
+            { month: 'Mar', sales: 34 }, { month: 'Apr', sales: 32 },
+            { month: 'May', sales: 40 }, { month: 'Jun', sales: 32 },
+            { month: 'Jul', sales: 35 }, { month: 'Aug', sales: 55 },
+            { month: 'Sep', sales: 38 }, { month: 'Oct', sales: 30 },
+            { month: 'Nov', sales: 25 }, { month: 'Dec', sales: 32 }
+        ];
+        return (<div className="template">
+                <ChartComponent style={{ "height": "200px" }} primaryXAxis={{ valueType: 'Category' }}>
+                    <Inject services={[ColumnSeries, Legend, Tooltip, Category, DataLabel]}/>
+                    <SeriesCollectionDirective>
+                        <SeriesDirective dataSource={chartData} xName='month' yName='sales' type='Column'/>
+                    </SeriesCollectionDirective>
+                </ChartComponent>
+            </div>);
+    }
+    render() {
+        return (<div>
+            <div className="container">
+                <div>
+                    <DashboardLayoutComponent id="dashboard_default" columns={7} cellSpacing={this.cellSpacing} allowResizing={true}>
+                        <PanelsDirective>
+                            <PanelDirective sizeX={1} sizeY={1} row={0} col={0} content={this.pieTemplate} header="<div> <h3>Widget 0 </h3></div>"/>
+                            <PanelDirective sizeX={1} sizeY={2} row={0} col={4} content={this.columnTemplate} header="<div><h3>Widget 1</h3></div>"/>
+                            <PanelDirective sizeX={3} sizeY={2} row={0} col={1} header="<div><h3>Widget 2</h3></div>"/>
+                            <PanelDirective sizeX={1} sizeY={1} row={1} col={0} content={this.lineTemplate} header="<div><h3>Widget 3</h3></div>"/>
+                            <PanelDirective sizeX={2} sizeY={1} row={2} col={0} header="<div><h3>Widget 4</h3></div>"/>
+                            <PanelDirective sizeX={1} sizeY={1} row={2} col={2} content={this.pieTemplate1} header="<div><h3>Widget 5</h3></div>"/>
+                            <PanelDirective sizeX={1} sizeY={1} row={2} col={3} header="<div><h3>Widget 6</h3></div>"/>
+                            <PanelDirective sizeX={1} sizeY={1} row={2} col={3} header="<div><h3>Widget 7</h3></div>"/>
+                           
+                        </PanelsDirective>
                     </DashboardLayoutComponent>
                 </div>
             </div>
-        );
+        </div>);
     }
 }
